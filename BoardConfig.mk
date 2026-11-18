@@ -67,7 +67,9 @@ BOARD_SUPER_EMPTY_PARTITIONS := metadata:falcon_dynamic_partitions:16777216
 # (~1424 MiB used).
 BOARD_VENDORIMAGE_PARTITION_SIZE := 125829120
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1562509312
-BOARD_KERNEL_CMDLINE += androidboot.super_partition=system
+# super is looked up as /dev/block/by-name/system, which ueventd only
+# creates for the boot devices
+BOARD_KERNEL_CMDLINE += androidboot.super_partition=system androidboot.boot_devices=msm_sdcc.1
 BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy
 
 # Properties
