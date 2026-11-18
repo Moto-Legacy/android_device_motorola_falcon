@@ -13,6 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Repartitioned with falcon-repartition.zip: ext4 system and vendor,
+# separate metadata and cache (see BoardConfigCommon.mk)
+TARGET_MSM8226_REPARTITIONED := true
+TARGET_RECOVERY_FSTAB := device/motorola/falcon/rootdir/etc/fstab.qcom
+
 # inherit from common msm8226-common
 -include device/motorola/msm8226-common/BoardConfigCommon.mk
 
@@ -39,10 +44,12 @@ TARGET_RECOVERY_DEVICE_MODULES := libinit_falcon
 # Partitions
 BOARD_BOOTIMAGE_PARTITION_SIZE := 10485760
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 10485760
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 880803840 # GPE, regular edition: 1023410176
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 5930598400 # 5930614784 - 16384
-# No cache image is built; the non-A/B OTA tools only need its size
-BOARD_CACHEIMAGE_PARTITION_SIZE := 694288384
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2147483648
+BOARD_VENDORIMAGE_PARTITION_SIZE := 314572800
+BOARD_CACHEIMAGE_PARTITION_SIZE := 50331648
+# 8 GB units; 16 GB ones have more, it's only used for userdata.img
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 5116903424
+BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy
 
 # Properties
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop

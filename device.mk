@@ -29,6 +29,15 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     init.target.rc
 
+# Repartitioned layout: first stage init mounts system, vendor and metadata
+# from the ramdisk fstab (this copy wins over msm8226-common's)
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/rootdir/etc/fstab.qcom:$(TARGET_COPY_OUT_RAMDISK)/fstab.qcom
+
+# The PDS dump goes back to /cache, /metadata is its own small partition now
+PRODUCT_VENDOR_PROPERTIES += \
+    ro.vendor.pds_dump=/cache/pds-dump.img
+
 # Sensors
 PRODUCT_PACKAGES += \
     akmd8963
